@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyBigInteger {
-    private static final int BLOCK_SIZE = 1000000;  // Размер блока
-    private List<Long> blocks;  // Список блоков числа
+    private static final int BLOCK_SIZE = 1000000; // Размер блока
+    private final List<Long> blocks; // Список блоков числа
 
     public MyBigInteger(String number) {
         blocks = new ArrayList<>();
@@ -28,7 +28,15 @@ public class MyBigInteger {
 
         // Преобразуем блоки числа в строку, начиная с последнего блока
         for (int i = blocks.size() - 1; i >= 0; i--) {
-            sb.append(blocks.get(i));
+            String blockStr = Long.toString(blocks.get(i));
+
+            // Дополняем блок нулями до заданного размера
+            if (i != blocks.size() - 1) {
+                int zerosToAdd = BLOCK_SIZE - blockStr.length();
+                sb.append("0".repeat(zerosToAdd));
+            }
+
+            sb.append(blockStr);
         }
 
         return sb.toString();
